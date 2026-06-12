@@ -1,0 +1,509 @@
+:root {
+  color-scheme: light;
+  --ink: #172026;
+  --muted: #5c6870;
+  --line: #d7dee2;
+  --surface: #ffffff;
+  --panel: #f4f7f8;
+  --accent: #087f5b;
+  --accent-dark: #056647;
+  --warning: #b95d12;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: #e9eef0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.workspace {
+  min-height: calc(100vh - 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 70px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.import-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  min-height: 54px;
+  padding: 0 18px;
+  color: #fff;
+  background: var(--ink);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.import-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.main-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.05fr) minmax(360px, 1.25fr) minmax(280px, 0.95fr);
+  gap: 16px;
+  min-height: 0;
+}
+
+.product-panel,
+.entry-panel,
+.preview-panel {
+  min-width: 0;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.product-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.field-label,
+.touch-field span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.search-input,
+.touch-field input {
+  width: 100%;
+  min-height: 58px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.search-input {
+  padding: 0 16px;
+  margin-bottom: 12px;
+}
+
+.touch-field input {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.touch-field input.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(8, 127, 91, 0.15);
+}
+
+.product-list {
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  padding-right: 2px;
+}
+
+.product-option {
+  width: 100%;
+  min-height: 62px;
+  padding: 10px 12px;
+  text-align: left;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.product-option strong,
+.product-option span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-option strong {
+  font-size: 18px;
+}
+
+.product-option span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.product-option.is-selected {
+  border-color: var(--accent);
+  background: #eaf7f2;
+}
+
+.entry-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.unit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.unit-button {
+  min-height: 54px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.unit-button.is-active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent);
+}
+
+.packed-date-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  align-items: end;
+  gap: 10px;
+}
+
+.packed-date-control input:disabled {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.date-toggle-button {
+  min-height: 58px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.date-toggle-button.is-active {
+  color: #fff;
+  background: var(--warning);
+  border-color: var(--warning);
+}
+
+.keypad {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  min-height: 330px;
+}
+
+.keypad button {
+  min-height: 58px;
+  border: 0;
+  border-radius: 8px;
+  background: #dce5e8;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.keypad button:active,
+.product-option:active,
+.unit-button:active,
+.date-toggle-button:active,
+.import-button:active {
+  transform: translateY(1px);
+}
+
+.keypad .wide {
+  grid-column: span 1;
+}
+
+.keypad .primary {
+  grid-column: span 2;
+  color: #fff;
+  background: var(--accent);
+  font-size: 26px;
+}
+
+.keypad .primary:hover,
+.import-button:hover {
+  background: var(--accent-dark);
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.label-preview,
+.print-label {
+  width: 100%;
+  aspect-ratio: 100 / 48;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4.5%;
+  background: #fff;
+  border: 2px solid var(--ink);
+  color: #000;
+}
+
+.label-product {
+  min-height: 38%;
+  display: flex;
+  align-items: flex-start;
+  font-size: clamp(22px, 3.2vw, 36px);
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.label-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.label-meta span,
+.packed-row span {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #333;
+}
+
+.label-meta strong {
+  display: block;
+  font-size: clamp(20px, 2.7vw, 31px);
+  line-height: 1;
+}
+
+.packed-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 2px solid #000;
+  padding-top: 8px;
+}
+
+.packed-row strong {
+  font-size: clamp(18px, 2.2vw, 26px);
+}
+
+#printArea {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    padding: 10px;
+  }
+
+  .workspace {
+    min-height: calc(100vh - 20px);
+    padding: 12px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-list {
+    max-height: 260px;
+  }
+
+  .field-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-height: 820px) and (min-width: 981px) {
+  .app-shell {
+    height: 100vh;
+    min-height: 0;
+    padding: 6px;
+  }
+
+  .workspace {
+    min-height: 0;
+    height: calc(100vh - 12px);
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .topbar {
+    min-height: 54px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .product-panel,
+  .entry-panel,
+  .preview-panel {
+    padding: 12px;
+  }
+
+  .search-input,
+  .touch-field input,
+  .unit-button,
+  .date-toggle-button,
+  .keypad button {
+    min-height: 50px;
+  }
+
+  .keypad {
+    min-height: 270px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .import-button {
+    width: 100%;
+  }
+
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .packed-date-control {
+    grid-template-columns: 1fr;
+  }
+}
+
+@page {
+  size: 100mm 48mm;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    width: 100mm;
+    margin: 0;
+    background: #fff;
+  }
+
+  .app-shell {
+    display: none;
+  }
+
+  #printArea {
+    display: block;
+  }
+
+  .print-label {
+    width: 100mm;
+    height: 48mm;
+    aspect-ratio: auto;
+    page-break-after: always;
+    break-after: page;
+    border: 0;
+  }
+
+  .print-label:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .print-label .label-product {
+    font-size: 21pt;
+  }
+
+  .print-label .label-meta strong {
+    font-size: 18pt;
+  }
+
+  .print-label .packed-row strong {
+    font-size: 15pt;
+  }
+}
