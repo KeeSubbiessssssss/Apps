@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Label Print Station</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Label printing controls">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Label Print Station</p>
+            <h1>Pack label printing</h1>
+          </div>
+          <label class="import-button">
+            Import CSV
+            <input id="productImport" type="file" accept=".csv,text/csv">
+          </label>
+        </header>
+
+        <div class="main-grid">
+          <section class="product-panel" aria-label="Products">
+            <label class="field-label" for="productSearch">Product</label>
+            <input id="productSearch" class="search-input" type="search" placeholder="Search imported products" autocomplete="off">
+            <div id="productList" class="product-list" role="listbox" aria-label="Imported products"></div>
+          </section>
+
+          <section class="entry-panel" aria-label="Label inputs">
+            <div class="field-grid">
+              <label class="touch-field">
+                <span>Copies</span>
+                <input id="copiesInput" class="keypad-target" inputmode="numeric" type="text" value="1" readonly>
+              </label>
+              <label class="touch-field">
+                <span>Weight</span>
+                <input id="weightInput" class="keypad-target" inputmode="decimal" type="text" value="" placeholder="0" readonly>
+              </label>
+              <label class="touch-field">
+                <span>QTY</span>
+                <input id="qtyInput" class="keypad-target" inputmode="numeric" type="text" value="" placeholder="0" readonly>
+              </label>
+            </div>
+
+            <div class="unit-row" role="group" aria-label="Weight unit">
+              <button id="gramsButton" class="unit-button is-active" type="button" data-unit="grams">grams</button>
+              <button id="kgButton" class="unit-button" type="button" data-unit="KG">KG</button>
+            </div>
+
+            <section class="keypad" aria-label="Onscreen keypad">
+              <button type="button" data-key="1">1</button>
+              <button type="button" data-key="2">2</button>
+              <button type="button" data-key="3">3</button>
+              <button type="button" data-key="4">4</button>
+              <button type="button" data-key="5">5</button>
+              <button type="button" data-key="6">6</button>
+              <button type="button" data-key="7">7</button>
+              <button type="button" data-key="8">8</button>
+              <button type="button" data-key="9">9</button>
+              <button type="button" data-key=".">.</button>
+              <button type="button" data-key="0">0</button>
+              <button type="button" data-action="back">Back</button>
+              <button class="wide" type="button" data-action="clear">Clear</button>
+              <button class="wide primary" id="printButton" type="button">Print</button>
+            </section>
+          </section>
+
+          <section class="preview-panel" aria-label="Label preview">
+            <div class="preview-header">
+              <span>Preview</span>
+              <span id="copySummary">1 copy</span>
+            </div>
+            <div class="packed-date-control">
+              <label class="touch-field" for="packedDateInput">
+                <span>Packed date</span>
+                <input id="packedDateInput" type="date" disabled>
+              </label>
+              <button id="packedDateToggle" class="date-toggle-button" type="button">Custom date</button>
+            </div>
+            <div class="label-preview">
+              <div class="label-product" id="previewProduct">Select a product</div>
+              <div class="label-meta">
+                <div>
+                  <span>WEIGHT</span>
+                  <strong id="previewWeight">--</strong>
+                </div>
+                <div>
+                  <span>QTY</span>
+                  <strong id="previewQty">--</strong>
+                </div>
+              </div>
+              <div class="packed-row">
+                <span>PACKED ON</span>
+                <strong id="packedDate"></strong>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <a class="partner-logo-link" href="https://www.educomit.com.au" target="_blank" rel="noopener noreferrer" aria-label="Visit Educom IT">
+      <img src="../assets/educom-it-logo.png" alt="Educom IT">
+    </a>
+
+    <div id="printArea" aria-hidden="true"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
