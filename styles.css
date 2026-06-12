@@ -368,6 +368,34 @@ h1 {
   font-size: clamp(18px, 2.2vw, 26px);
 }
 
+.partner-logo-link {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 20;
+  display: inline-flex;
+  width: clamp(110px, 12vw, 170px);
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(23, 32, 38, 0.16);
+}
+
+.partner-logo-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.partner-logo-link:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
 #printArea {
   display: none;
 }
@@ -458,6 +486,13 @@ h1 {
   .packed-date-control {
     grid-template-columns: 1fr;
   }
+
+  .partner-logo-link {
+    right: 10px;
+    bottom: 10px;
+    width: 96px;
+    padding: 7px;
+  }
 }
 
 @page {
@@ -474,6 +509,10 @@ h1 {
   }
 
   .app-shell {
+    display: none;
+  }
+
+  .partner-logo-link {
     display: none;
   }
 
