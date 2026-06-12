@@ -299,6 +299,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 96px;
 }
 
 .preview-header {
@@ -370,19 +371,14 @@ h1 {
 
 .partner-logo-link {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  right: 20px;
+  bottom: 20px;
   z-index: 20;
   display: inline-flex;
-  width: clamp(110px, 12vw, 170px);
-  aspect-ratio: 1;
+  width: clamp(150px, 16vw, 240px);
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(23, 32, 38, 0.16);
+  line-height: 0;
 }
 
 .partner-logo-link img {
@@ -451,6 +447,10 @@ h1 {
     padding: 12px;
   }
 
+  .preview-panel {
+    padding-bottom: 84px;
+  }
+
   .search-input,
   .touch-field input,
   .unit-button,
@@ -490,8 +490,11 @@ h1 {
   .partner-logo-link {
     right: 10px;
     bottom: 10px;
-    width: 96px;
-    padding: 7px;
+    width: 128px;
+  }
+
+  .preview-panel {
+    padding-bottom: 64px;
   }
 }
 
