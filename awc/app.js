@@ -12,6 +12,7 @@ const products = [
 const state = {
   selectedProduct: products[0],
   activeInput: "weightInput",
+  replaceActiveInputOnNextKey: false,
   unit: "grams",
   packedDateMode: "today",
   packedDateValue: ""
@@ -124,6 +125,7 @@ function escapeHtml(value) {
 
 function setActiveInput(inputId) {
   state.activeInput = inputId;
+  state.replaceActiveInputOnNextKey = inputId === "copiesInput" && copiesInput.value === "1";
   keypadTargets.forEach((input) => {
     input.classList.toggle("is-active", input.id === inputId);
   });
@@ -134,6 +136,12 @@ function applyKey(key) {
   if (!input) return;
   if (key === "." && input.id !== "weightInput") return;
   if (key === "." && input.value.includes(".")) return;
+  if (state.replaceActiveInputOnNextKey) {
+    input.value = key === "." ? input.value : key;
+    state.replaceActiveInputOnNextKey = false;
+    renderPreview();
+    return;
+  }
   if (input.value.length >= 7) return;
   if (input.value === "0" && key !== ".") {
     input.value = key;
@@ -148,7 +156,12 @@ function applyAction(action) {
   if (!input) return;
   if (action === "clear") input.value = "";
   if (action === "back") input.value = input.value.slice(0, -1);
-  if (input.id === "copiesInput" && !input.value) input.value = "1";
+  if (input.id === "copiesInput" && !input.value) {
+    input.value = "1";
+    state.replaceActiveInputOnNextKey = true;
+  } else {
+    state.replaceActiveInputOnNextKey = false;
+  }
   renderPreview();
 }
 
