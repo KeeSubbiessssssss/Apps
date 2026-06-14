@@ -50,12 +50,6 @@ input {
   min-height: 70px;
 }
 
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .eyebrow {
   margin: 0 0 4px;
   color: var(--accent);
@@ -83,17 +77,6 @@ h1 {
   background: var(--ink);
   border-radius: 8px;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.secondary-button {
-  min-width: 128px;
-  min-height: 54px;
-  border: 2px solid var(--ink);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--ink);
-  font-weight: 800;
   cursor: pointer;
 }
 
@@ -292,7 +275,6 @@ h1 {
 .product-option:active,
 .unit-button:active,
 .date-toggle-button:active,
-.secondary-button:active,
 .import-button:active {
   transform: translateY(1px);
 }
@@ -414,105 +396,6 @@ h1 {
   display: none;
 }
 
-.settings-dialog {
-  width: min(520px, calc(100vw - 28px));
-  padding: 0;
-  border: 0;
-  border-radius: 8px;
-  color: var(--ink);
-  background: #fff;
-}
-
-.settings-dialog::backdrop {
-  background: rgba(23, 32, 38, 0.42);
-}
-
-.settings-panel {
-  display: grid;
-  gap: 14px;
-  padding: 18px;
-}
-
-.settings-header,
-.settings-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.settings-header h2 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.icon-button {
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 8px;
-  background: #dce5e8;
-  color: var(--ink);
-  font-size: 20px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.settings-field span,
-.settings-check span {
-  display: block;
-  margin-bottom: 7px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.settings-field input,
-.settings-field select {
-  width: 100%;
-  min-height: 48px;
-  padding: 0 12px;
-  border: 2px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--ink);
-}
-
-.settings-check {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.settings-check input {
-  width: 22px;
-  height: 22px;
-}
-
-.settings-check span {
-  margin: 0;
-}
-
-.settings-status {
-  min-height: 20px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.primary-action {
-  min-width: 128px;
-  min-height: 50px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 800;
-  cursor: pointer;
-}
-
 @media (max-width: 980px) {
   .app-shell {
     padding: 10px;
@@ -588,17 +471,11 @@ h1 {
     flex-direction: column;
   }
 
-  .topbar-actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
   h1 {
     font-size: 25px;
   }
 
-  .import-button,
-  .secondary-button {
+  .import-button {
     width: 100%;
   }
 

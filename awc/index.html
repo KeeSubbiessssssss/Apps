@@ -14,13 +14,10 @@
             <p class="eyebrow">Label Print Station</p>
             <h1>Pack label printing</h1>
           </div>
-          <div class="topbar-actions">
-            <button id="settingsButton" class="secondary-button" type="button" hidden>Settings</button>
-            <label class="import-button">
-              Import CSV
-              <input id="productImport" type="file" accept=".csv,text/csv">
-            </label>
-          </div>
+          <label class="import-button">
+            Import CSV
+            <input id="productImport" type="file" accept=".csv,text/csv">
+          </label>
         </header>
 
         <div class="main-grid">
@@ -108,46 +105,6 @@
     </a>
 
     <div id="printArea" aria-hidden="true"></div>
-
-    <dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle">
-      <form method="dialog" class="settings-panel">
-        <header class="settings-header">
-          <h2 id="settingsTitle">Print settings</h2>
-          <button class="icon-button" id="settingsCloseButton" type="button" aria-label="Close settings">x</button>
-        </header>
-        <label class="settings-field">
-          <span>Printer</span>
-          <select id="printerSelect"></select>
-        </label>
-        <label class="settings-field">
-          <span>Preset</span>
-          <input id="presetInput" type="text" placeholder="Optional preset name">
-        </label>
-        <label class="settings-field">
-          <span>Media</span>
-          <input id="mediaInput" type="text" value="Custom.100x48mm">
-        </label>
-        <label class="settings-field">
-          <span>Orientation</span>
-          <select id="orientationSelect">
-            <option value="portrait">Portrait</option>
-            <option value="landscape">Landscape</option>
-          </select>
-        </label>
-        <label class="settings-check">
-          <input id="fitToPageInput" type="checkbox" checked>
-          <span>Fit to page</span>
-        </label>
-        <label class="settings-field">
-          <span>Advanced lp options</span>
-          <input id="rawOptionsInput" type="text" placeholder="Example: print-quality=5 sides=one-sided">
-        </label>
-        <p id="settingsStatus" class="settings-status" role="status"></p>
-        <footer class="settings-footer">
-          <button id="saveSettingsButton" class="primary-action" type="button">Save</button>
-        </footer>
-      </form>
-    </dialog>
     <script src="app.js"></script>
   </body>
 </html>
