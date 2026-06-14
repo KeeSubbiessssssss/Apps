@@ -36,6 +36,20 @@ const packedDateInput = document.querySelector("#packedDateInput");
 const packedDateToggle = document.querySelector("#packedDateToggle");
 const copySummary = document.querySelector("#copySummary");
 const printArea = document.querySelector("#printArea");
+const settingsButton = document.querySelector("#settingsButton");
+const settingsDialog = document.querySelector("#settingsDialog");
+const settingsCloseButton = document.querySelector("#settingsCloseButton");
+const printerSelect = document.querySelector("#printerSelect");
+const presetInput = document.querySelector("#presetInput");
+const mediaInput = document.querySelector("#mediaInput");
+const orientationSelect = document.querySelector("#orientationSelect");
+const fitToPageInput = document.querySelector("#fitToPageInput");
+const rawOptionsInput = document.querySelector("#rawOptionsInput");
+const saveSettingsButton = document.querySelector("#saveSettingsButton");
+const settingsStatus = document.querySelector("#settingsStatus");
+
+let localPrintAvailable = false;
+let printSettings = {};
 
 function formatDate(date) {
   return new Intl.DateTimeFormat("en-AU", {
@@ -201,7 +215,7 @@ function labelMarkup(data, className = "print-label") {
   `;
 }
 
-function printLabels() {
+async function printLabels() {
   if (!state.selectedProduct) {
     productSearch.focus();
     return;
@@ -209,8 +223,111 @@ function printLabels() {
 
   const copies = normaliseCopies();
   const data = currentLabelData();
+  if (localPrintAvailable) {
+    printButton.disabled = true;
+    printButton.textContent = "Printing...";
+    try {
+      const response = await fetch("/api/print", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ copies, label: data, settings: readSettingsForm() })
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok) {
+        throw new Error(result.stderr || result.error || "Print failed");
+      }
+      if (settingsStatus) settingsStatus.textContent = "Print job sent.";
+    } catch (error) {
+      window.alert(`Print failed: ${error.message}`);
+    } finally {
+      printButton.disabled = false;
+      printButton.textContent = "Print";
+    }
+    return;
+  }
+
   printArea.innerHTML = Array.from({ length: copies }, () => labelMarkup(data)).join("");
   window.print();
+}
+
+async function requestJson(url, options) {
+  const response = await fetch(url, options);
+  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+  return response.json();
+}
+
+function readSettingsForm() {
+  return {
+    printer: printerSelect?.value || "",
+    preset: presetInput?.value.trim() || "",
+    media: mediaInput?.value.trim() || "",
+    orientation: orientationSelect?.value || "portrait",
+    fitToPage: Boolean(fitToPageInput?.checked),
+    rawOptions: rawOptionsInput?.value.trim() || ""
+  };
+}
+
+function writeSettingsForm(settings) {
+  printSettings = { ...printSettings, ...settings };
+  if (presetInput) presetInput.value = printSettings.preset || "";
+  if (mediaInput) mediaInput.value = printSettings.media || "Custom.100x48mm";
+  if (orientationSelect) orientationSelect.value = printSettings.orientation || "portrait";
+  if (fitToPageInput) fitToPageInput.checked = printSettings.fitToPage !== false;
+  if (rawOptionsInput) rawOptionsInput.value = printSettings.rawOptions || "";
+  if (printerSelect) printerSelect.value = printSettings.printer || "";
+}
+
+async function loadPrinters() {
+  if (!printerSelect) return;
+  const printerData = await requestJson("/api/printers");
+  const currentPrinter = printSettings.printer || printerData.defaultPrinter || "";
+  printerSelect.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = printerData.defaultPrinter
+    ? `System default (${printerData.defaultPrinter})`
+    : "System default";
+  printerSelect.append(defaultOption);
+
+  printerData.printers.forEach((printer) => {
+    const option = document.createElement("option");
+    option.value = printer;
+    option.textContent = printer;
+    printerSelect.append(option);
+  });
+
+  printerSelect.value = currentPrinter;
+  if (settingsStatus) {
+    settingsStatus.textContent = printerData.error || "";
+  }
+}
+
+async function initialiseLocalPrint() {
+  if (!settingsButton) return;
+  try {
+    printSettings = await requestJson("/api/settings");
+    localPrintAvailable = true;
+    settingsButton.hidden = false;
+    writeSettingsForm(printSettings);
+    await loadPrinters();
+  } catch (error) {
+    localPrintAvailable = false;
+  }
+}
+
+async function savePrintSettings() {
+  try {
+    printSettings = await requestJson("/api/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(readSettingsForm())
+    });
+    writeSettingsForm(printSettings);
+    if (settingsStatus) settingsStatus.textContent = "Settings saved.";
+  } catch (error) {
+    if (settingsStatus) settingsStatus.textContent = `Could not save settings: ${error.message}`;
+  }
 }
 
 function parseCsv(text) {
@@ -279,6 +396,20 @@ keypad.addEventListener("click", (event) => {
 
 printButton.addEventListener("click", printLabels);
 
+settingsButton?.addEventListener("click", async () => {
+  await loadPrinters();
+  if (settingsDialog?.showModal) {
+    settingsDialog.showModal();
+  }
+});
+
+settingsCloseButton?.addEventListener("click", () => {
+  settingsDialog?.close();
+});
+
+saveSettingsButton?.addEventListener("click", savePrintSettings);
+
 setActiveInput(state.activeInput);
 renderProducts();
 renderPreview();
+initialiseLocalPrint();
